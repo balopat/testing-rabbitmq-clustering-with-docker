@@ -13,6 +13,7 @@ RUN yum install -y erlang
 
 RUN yum install -y  http://www.rabbitmq.com/releases/rabbitmq-server/v3.5.6/rabbitmq-server-3.5.6-1.noarch.rpm
 
+COPY /rabbitmq.config /etc/rabbitmq/rabbitmq.config
+
 # Allow triggerable events on the first time running
 RUN touch /tmp/firsttimerunning
-
