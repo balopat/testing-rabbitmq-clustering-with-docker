@@ -22,7 +22,7 @@ if [ -f $firsttimefile ]; then
   echo "Waiting for RabbitMQ Server to start" >> $logfile
   sleep 3
   echo "Enabling Plugins" >> $logfile
-  /usr/sbin/rabbitmq-plugins enable   rabbitmq_management  rabbitmq_management_agent >> $logfile
+  /usr/sbin/rabbitmq-plugins enable rabbitmq_mqtt rabbitmq_stomp rabbitmq_management  rabbitmq_management_agent rabbitmq_management_visualiser rabbitmq_federation rabbitmq_federation_management sockjs >> $logfile
   echo "Waiting for Plugins to finish" >> $logfile
   sleep 1
   echo "Stopping the RabbitMQ using stop_app" >> $logfile
