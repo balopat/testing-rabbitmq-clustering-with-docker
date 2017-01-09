@@ -14,7 +14,7 @@ echo "Running: rabbitmqctl add_vhost $curhostname" >> $logfile
 echo "Running: rabbitmqctl set_permissions -p $curhostname guest '.*' '.*' '.*'" >> $logfile
 /usr/sbin/rabbitmqctl set_permissions -p $curhostname guest ".*" ".*" ".*"  >> $logfile
 sleep 5
-    
+
 # For version 3.5.6 the first time running the cluster needs to enable the plugins
 if [ -f $firsttimefile ]; then
   echo "First Time Running Enabling Plugins" >> $logfile
@@ -22,7 +22,7 @@ if [ -f $firsttimefile ]; then
   echo "Waiting for RabbitMQ Server to start" >> $logfile
   sleep 3
   echo "Enabling Plugins" >> $logfile
-  /usr/sbin/rabbitmq-plugins enable rabbitmq_mqtt rabbitmq_stomp rabbitmq_management  rabbitmq_management_agent rabbitmq_management_visualiser rabbitmq_federation rabbitmq_federation_management sockjs >> $logfile
+  /usr/sbin/rabbitmq-plugins enable   rabbitmq_management  rabbitmq_management_agent >> $logfile
   echo "Waiting for Plugins to finish" >> $logfile
   sleep 1
   echo "Stopping the RabbitMQ using stop_app" >> $logfile
@@ -38,7 +38,7 @@ if [ -f $firsttimefile ]; then
   rm -f $firsttimefile >> $logfile
   echo "Done Cleanup First Time File" >> $logfile
 
-  
+
   # Allow the cluster nodes to wait for the master to start the first time
   if [ -z "$CLUSTERED" ]; then
     echo "Ignoring as this is the server node" >> $logfile
@@ -60,7 +60,7 @@ if [ -z "$CLUSTERED" ]; then
   # if not clustered then start it normally as if it is a single server
   /usr/sbin/rabbitmq-server  >> $logfile
   echo "Done Starting non-Clustered Server Instance" >> $logfile
-    
+
   # Tail to keep the foreground process active.
   tail -f /var/log/rabbitmq/*
 
@@ -69,7 +69,7 @@ else
     # If clustered, but cluster is not specified then start normally as this could be the first server in the cluster
     echo "Starting Single Server Instance" >> $logfile
     /usr/sbin/rabbitmq-server >> $logfile
-  
+
     echo "Done Starting Single Server Instance" >> $logfile
   else
     echo "Starting Clustered Server Instance as a DETACHED single instance" >> $logfile
@@ -91,7 +91,7 @@ else
 
     echo "Done Starting Cluster Node" >> $logfile
   fi
-    
+
   # Tail to keep the foreground process active.
   tail -f /var/log/rabbitmq/*
 

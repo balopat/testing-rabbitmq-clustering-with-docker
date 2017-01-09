@@ -12,6 +12,7 @@ ADD rabbitmq-env.conf   /etc/rabbitmq/
 ADD erlang.cookie       /var/lib/rabbitmq/.erlang.cookie
 ADD startclusternode.sh /opt/rabbit/
 ADD debugnodes.sh       /opt/rabbit/
+ADD rabbitmqadmin       /opt/rabbit/
 ADD tl                  /bin/tl
 ADD rl                  /bin/rl
 ADD rst                 /bin/rst
@@ -27,18 +28,11 @@ ADD simulator_tools/reset_first_time_running.sh /opt/simulator/tools/
 RUN chmod 644 /etc/rabbitmq/rabbitmq.config
 RUN chmod 644 /etc/rabbitmq/rabbitmq-env.conf
 RUN chmod 400 /var/lib/rabbitmq/.erlang.cookie
-RUN chmod 777 /opt/rabbit/startclusternode.sh
-RUN chmod 777 /opt/rabbit/debugnodes.sh
+RUN chmod +x /opt/rabbit/*
 RUN chmod 777 /bin/tl
 RUN chmod 777 /bin/rl
 RUN chmod 777 /bin/rst
-RUN chmod 777 /opt/simulator
-RUN chmod 777 /opt/simulator/tools
-RUN chmod 777 /opt/simulator/tools/start_node.sh
-RUN chmod 777 /opt/simulator/tools/stop_node.sh 
-RUN chmod 777 /opt/simulator/tools/join_cluster.sh
-RUN chmod 777 /opt/simulator/tools/leave_cluster.sh
-RUN chmod 777 /opt/simulator/tools/reset_first_time_running.sh 
+RUN chmod -R 777 /opt/simulator
 
 # Set ownership permissions on files in the container
 RUN chown rabbitmq:rabbitmq /var/lib/rabbitmq/.erlang.cookie
@@ -62,4 +56,3 @@ EXPOSE 9105
 
 # Run this to autostart the cluster nodes
 CMD /opt/rabbit/startclusternode.sh
-
